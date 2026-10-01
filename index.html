@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flujos & PINNs — Visualizador Interactivo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <!-- MathJax for rendering LaTeX formulas cleanly -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="logo-group">
+        <div class="logo-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 12h5l3 7 4-14 3 7h5"></path>
+          </svg>
+        </div>
+        <div>
+          <h1 class="app-title">Flujos & PINNs — Visualizador Estético</h1>
+          <p class="app-subtitle">Mecánica de Fluidos & Redes Neuronales Informadas por la Física</p>
+        </div>
+      </div>
+
+      <div class="header-badges">
+        <div class="status-badge pulse">
+          <span class="status-dot"></span>
+          <span>Memoria RAM Eficiente</span>
+        </div>
+        <div class="author-badge">
+          G1 — Da Cruz · Jeifetz · Teira
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Navigation Tabs -->
+    <nav class="main-tabs">
+      <button class="tab-btn active" data-tab="p1">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M4.93 19.07l14.14-14.14"/></svg>
+        Problema 1: Flujos Adimensionales
+      </button>
+      <button class="tab-btn" data-tab="p2">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        Problema 2: Integración con PINNs
+      </button>
+      <button class="tab-btn" data-tab="p3">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        Problema 3: Vórtice de Burgers (PIV)
+      </button>
+      <button class="tab-btn" data-tab="doc">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Correcciones & Documentación
+      </button>
+    </nav>
+
+    <!-- TAB 1: PROBLEMA 1 -->
+    <main class="tab-content active" id="p1">
+      <div class="section-header">
+        <h2>Problema 1: Integración Numérica de Flujos Adimensionales</h2>
+        <p>Estudio de trayectorias, líneas de corriente y campos de velocidad instantáneos con fuente lineal 2D.</p>
+      </div>
+
+      <!-- Sub-tabs P1 -->
+      <div class="subtabs">
+        <button class="subtab-btn active" data-subtab="p1-i">Inciso (i): Corriente Creciente</button>
+        <button class="subtab-btn" data-subtab="p1-ii">Inciso (ii): Torbellino Decayente</button>
+        <button class="subtab-btn" data-subtab="p1-iii">Inciso (iii): Corriente Oscilante</button>
+      </div>
+
+      <!-- Inciso (i) -->
+      <div class="subtab-content active" id="p1-i">
+        <div class="formula-card">
+          <h3>Ecuación del Flujo Adimensional:</h3>
+          <div class="formula-box">
+            $$\frac{\mathrm{d}\mathbf{X}'}{\mathrm{d}t'} = \frac{1}{r'}\hat{\mathbf{r}} + t'\,\hat{\mathbf{x}}$$
+          </div>
+          <p class="formula-desc">Para $t' \ll 1$ domina la fuente radial. Para $t' \gg 1$ domina la advección uniforme hacia $+\hat{x}$.</p>
+        </div>
+
+        <div class="grid-2col">
+          <div class="card clickable-card" onclick="openModal('assets/p1_i_campo_instantaneo.png', 'Campo Instantáneo u(x,t) a distintos tiempos')">
+            <div class="card-header">
+              <span class="badge blue">Figura 1.1</span>
+              <h4>Campo Instantáneo $\mathbf{u}(\mathbf{x}, t)$</h4>
+            </div>
+            <div class="img-wrapper">
+              <img src="assets/p1_i_campo_instantaneo.png" alt="Campo instantaneo" loading="lazy">
+              <div class="img-overlay"><span>🔍 Ampliar Imagen</span></div>
+            </div>
+            <p class="card-caption">Evolución de las líneas de corriente instantáneas para $t \in \{0, 1, 2\}$. Se aprecia la transición de flujo radial a advección horizontal.</p>
+          </div>
+
+          <div class="card clickable-card" onclick="openModal('assets/p1_i_trayectorias.png', 'Trayectorias RK4 hasta T=3')">
+            <div class="card-header">
+              <span class="badge green">Figura 1.2</span>
+              <h4>Trayectorias de Partículas ($T=3$)</h4>
+            </div>
+            <div class="img-wrapper">
+              <img src="assets/p1_i_trayectorias.png" alt="Trayectorias RK4" loading="lazy">
+              <div class="img-overlay"><span>🔍 Ampliar Imagen</span></div>
+            </div>
+            <p class="card-caption">Integración numérica mediante RK4 desde un semicírculo de radio 1. El fondo gris muestra el campo congelado en $t=0$.</p>
+          </div>
+        </div>
+
+        <div class="grid-2col mt-4">
+          <div class="card clickable-card" onclick="openModal('assets/p1_i_trayectoria_vs_linea.png', 'Trayectoria vs Línea de Corriente')">
+            <div class="card-header">
+              <span class="badge purple">Figura 1.3</span>
+              <h4>Trayectoria vs. Línea de Corriente</h4>
+            </div>
+            <div class="img-wrapper">
+              <img src="assets/p1_i_trayectoria_vs_linea.png" alt="Trayectoria vs Linea de Corriente" loading="lazy">
+              <div class="img-overlay"><span>🔍 Ampliar Imagen</span></div>
+            </div>
+            <p class="card-caption">Al ser un flujo no estacionario, la trayectoria de la partícula difiere sustancialmente de la línea de corriente instantánea.</p>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <span class="badge orange">Animación</span>
+              <h4>Evolución Temporal de Trayectorias</h4>
+            </div>
+            <div class="img-wrapper">
+              <img src="assets/p1_i_anim.gif" alt="Animación Trayectorias Inciso i" loading="lazy" class="anim-media">
+            </div>
+            <p class="card-caption">Animación continua del movimiento de los elementos de fluido bajo la acción combinada de la fuente y la corriente creciente.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Inciso (ii) -->
+      <div class="subtab-content" id="p1-ii">
+        <div class="formula-card">
+          <h3>Ecuación del Flujo con Torbellino Decayente:</h3>
+          <div class="formula-box">
+            $$\frac{\mathrm{d}\mathbf{X}'}{\mathrm{d}t'} = \frac{1}{r'}\hat{\mathbf{r}} + \beta\, e^{-t'}\,\frac{1}{r'}\hat{\boldsymbol\theta}, \qquad \beta \equiv \frac{\Gamma_0}{Q}$$
+          </div>
+          <p class="formula-desc">El parámetro $\beta$ mide la intensidad inicial del vórtice. Al decaer exponencialmente la circulación, el flujo se relaja a una fuente pura.</p>
+        </div>
+
+        <div class="card clickable-card" onclick="openModal('assets/p1_ii_betas.png', 'Efecto del Parámetro Beta')">
+          <div class="card-header">
+            <span class="badge blue">Figura 1.4</span>
+            <h4>Efecto del Parámetro $\beta = \Gamma_0 / Q$</h4>
+          </div>
+          <div class="img-wrapper">
+            <img src="assets/p1_ii_betas.png" alt="Trayectorias para distinto Beta" loading="lazy">
+            <div class="img-overlay"><span>🔍 Ampliar Imagen</span></div>
+          </div>
+          <p class="card-caption">Para $\beta=0$ las trayectorias son radiales. A mayor $\beta$, se observa una marcada rotación inicial que se relaja a medida que $t \to \infty$.</p>
+        </div>
+
+        <div class="grid-2col mt-4">
+          <div class="card">
+            <div class="card-header">
+              <span class="badge purple">Animación ($\beta=2.0$)</span>
+              <h4>Torbellino de Intensidad Intermedia</h4>
+            </div>
+            <div class="img-wrapper">
+              <img src="assets/p1_ii_anim_beta2.gif" alt="Animación Beta 2" loading="lazy" class="anim-media">
+            </div>
+            <p class="card-caption">Evolución de partículas para $\beta=2.0$.</p>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <span class="badge orange">Animación ($\beta=8.0$)</span>
+              <h4>Torbellino de Alta Intensidad</h4>
+            </div>
+            <div class="img-wrapper">
+              <img src="assets/p1_ii_anim_beta8.gif" alt="Animación Beta 8" loading="lazy" class="anim-media">
+            </div>
+            <p class="card-caption">Evolución de partículas para $\beta=8.0$ con giros espiralados iniciales.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Inciso (iii) -->
+      <div class="subtab-content" id="p1-iii">
+        <div class="formula-card">
+          <h3>Ecuación del Flujo con Corriente Oscilante:</h3>
+          <div class="formula-box">
+            $$\frac{\mathrm{d}\mathbf{X}'}{\mathrm{d}t'} = \frac{1}{r'}\hat{\mathbf{r}} + \cos(\Omega t')\,\hat{\mathbf{x}}, \qquad \Omega \equiv \frac{\omega Q}{2\pi U_0^2}$$
+          </div>
+          <p class="formula-desc">$\Omega$ representa la frecuencia reducida. $\Omega \ll 1$ causa oscilación lenta, mientras que $\Omega \gg 1$ promedia advección nula.</p>
+        </div>
+
+        <div class="card clickable-card" onclick="openModal('assets/p1_iii_omegas.png', 'Trayectorias para distinta frecuencia reducida Omega')">
+          <div class="card-header">
+            <span class="badge blue">Figura 1.5</span>
+            <h4>Trayectorias para Frecuencia Reducida $\Omega \in \{0.3, 1.0, 3.0\}$</h4>
+          </div>
+          <div class="img-wrapper">
+            <img src="assets/p1_iii_omegas.png" alt="Trayectorias para distintas Omegas" loading="lazy">
+            <div class="img-overlay"><span>🔍 Ampliar Imagen</span></div>
+          </div>
+          <p class="card-caption">Comparativa del comportamiento espacial amplio para integración extendida.</p>
+        </div>
+
+        <div class="card mt-4">
+          <div class="card-header">
+            <span class="badge green">Animación Ampliada ($\Omega=1.0$)</span>
+            <h4>Régimen Intermedio Ondulatorio</h4>
+          </div>
+          <div class="img-wrapper" style="max-width: 650px; margin: 0 auto;">
+            <img src="assets/p1_iii_anim_om1.gif" alt="Animación Omega 1.0" loading="lazy" class="anim-media">
+          </div>
+          <p class="card-caption">Oscilación de alta precisión con trayectoria sinusoidal envolvente en expansión radial.</p>
+        </div>
+      </div>
+    </main>
+
+    <!-- TAB 2: PROBLEMA 2 -->
+    <main class="tab-content" id="p2">
+      <div class="section-header">
+        <h2>Problema 2: Integración mediante PINNs</h2>
+        <p>Redes Neuronales Informadas por la Física para el flujo adimensional del Inciso (i).</p>
+      </div>
+
+      <div class="grid-2col">
+        <div class="card clickable-card" onclick="openModal('assets/p2_ref.png', 'Solución de Referencia RK4')">
+          <div class="card-header">
+            <span class="badge blue">Referencia</span>
+            <h4>Solución RK4 ($\Delta t = 10^{-3}$)</h4>
+          </div>
+          <div class="img-wrapper">
+            <img src="assets/p2_ref.png" alt="Solución RK4" loading="lazy">
+            <div class="img-overlay"><span>🔍 Ampliar Imagen</span></div>
+          </div>
+          <p class="card-caption">Solución exacta de referencia obtenida con paso muy fino hasta $t=2T$.</p>
+        </div>
+
+        <div class="card clickable-card" onclick="openModal('assets/p2_base_loss.png', 'Convergencia Entrenamiento PINN')">
+          <div class="card-header">
+            <span class="badge green">Pérdidas</span>
+            <h4>Convergencia del Entrenamiento Base</h4>
+          </div>
+          <div class="img-wrapper">
+            <img src="assets/p2_base_loss.png" alt="Pérdidas Base PINN" loading="lazy">
+            <div class="img-overlay"><span>🔍 Ampliar Imagen</span></div>
+          </div>
+          <p class="card-caption">Evolución de $\mathrm{MSE}_d$ (datos) y $\mathrm{MSE}_f$ (física) para $N_d=10, N_f=20, \lambda=10^{-4}$.</p>
+        </div>
+      </div>
+
+      <div class="section-header mt-6">
+        <h3>Extrapolación y Cobertura Temporal</h3>
+      </div>
+
+      <div class="grid-2col">
+        <div class="card clickable-card" onclick="openModal('assets/p2_extrap.png', 'Error de Extrapolación en t > T')">
+          <div class="card-header">
+            <span class="badge orange">Extrapolación</span>
+            <h4>Error $\epsilon(t)$ con Física en $[0, T]$</h4>
+          </div>
+          <div class="img-wrapper">
+            <img src="assets/p2_extrap.png" alt="Error Extrapolación Base" loading="lazy">
+            <div class="img-overlay"><span>🔍 Ampliar Imagen</span></div>
+          </div>
+          <p class="card-caption">Al superar $t=T$, la pérdida de puntos de física causa que el error crezca monótonamente.</p>
+        </div>
+
+        <div class="card clickable-card" onclick="openModal('assets/p2_extrap_ext.png', 'Efecto de Extender Dominio de Física')">
+          <div class="card-header">
+            <span class="badge purple">Dominio Extendible</span>
+            <h4>Física Extendida a $[0, 2T]$</h4>
+          </div>
+          <div class="img-wrapper">
+            <img src="assets/p2_extrap_ext.png" alt="Error Extrapolación Extendida" loading="lazy">
+            <div class="img-overlay"><span>🔍 Ampliar Imagen</span></div>
+          </div>
+          <p class="card-caption">Distribuir puntos de física en $[0, 2T]$ reduce drásticamente el error en tiempos largos.</p>
+        </div>
+      </div>
+
+      <div class="section-header mt-6">
+        <h3>Sensibilidad a Hiperparámetros y Arquitectura</h3>
+      </div>
+
+      <div class="grid-3col">
+        <div class="card clickable-card" onclick="openModal('assets/p2_sweep_nd.png', 'Barrido en Nd')">
+          <div class="card-header">
+            <span class="badge blue">Barrido $N_d$</span>
+            <h4>Error vs. Puntos de Datos</h4>
+          </div>
+          <div class="img-wrapper">
+            <img src="assets/p2_sweep_nd.png" alt="Barrido Nd" loading="lazy">
+            <div class="img-overlay"><span>🔍 Ampliar</span></div>
+          </div>
+          <p class="card-caption">El error $\epsilon_M$ disminuye fuertemente al inicio y luego se estabiliza.</p>
+        </div>
+
+        <div class="card clickable-card" onclick="openModal('assets/p2_sweep_nf.png', 'Barrido en Nf')">
+          <div class="card-header">
+            <span class="badge green">Barrido $N_f$</span>
+            <h4>Error vs. Puntos de Física</h4>
+          </div>
+          <div class="img-wrapper">
+            <img src="assets/p2_sweep_nf.png" alt="Barrido Nf" loading="lazy">
+            <div class="img-overlay"><span>🔍 Ampliar</span></div>
+          </div>
+          <p class="card-caption">Aumentar $N_f$ satura el beneficio y añade costo computacional (`autograd`).</p>
+        </div>
+
+        <div class="card clickable-card" onclick="openModal('assets/p2_sweep_lambda.png', 'Barrido en Lambda')">
+          <div class="card-header">
+            <span class="badge purple">Barrido $\lambda$</span>
+            <h4>Error vs. Peso de Física</h4>
+          </div>
+          <div class="img-wrapper">
+            <img src="assets/p2_sweep_lambda.png" alt="Barrido Lambda" loading="lazy">
+            <div class="img-overlay"><span>🔍 Ampliar</span></div>
+          </div>
+          <p class="card-caption">Ponderar mayor peso a la física reduce el error en varios órdenes de magnitud.</p>
+        </div>
+      </div>
+
+      <div class="card mt-4 clickable-card" onclick="openModal('assets/p2_architectures.png', 'Comparación de Arquitecturas')">
+        <div class="card-header">
+          <span class="badge orange">Arquitecturas</span>
+          <h4>Comparación de Arquitecturas Neuronales</h4>
+        </div>
+        <div class="img-wrapper" style="max-width: 600px; margin: 0 auto;">
+          <img src="assets/p2_architectures.png" alt="Comparación Arquitecturas" loading="lazy">
+          <div class="img-overlay"><span>🔍 Ampliar Imagen</span></div>
+        </div>
+        <p class="card-caption">Comparativa entre $[1,16,16,2]$, $[1,32,32,2]$ y $[1,32,32,32,2]$. Redes más complejas no resuelven per se el problema de extrapolación sin restricción física temporal.</p>
+      </div>
+    </main>
+
+    <!-- TAB 3: PROBLEMA 3 -->
+    <main class="tab-content" id="p3">
+      <div class="section-header">
+        <h2>Problema 3: Estimación de Parámetros — Vórtice de Burgers</h2>
+        <p>Ajuste simultáneo de pesos neuronales y parámetros físicos $(\alpha, \Gamma, r_0^2)$ sobre datos PIV experimentales.</p>
+      </div>
+
+      <div class="formula-card">
+        <h3>Campo de Velocidad del Vórtice de Burgers:</h3>
+        <div class="formula-box">
+          $$u_x = -\alpha x - \frac{\Gamma\,y}{2\pi r^2}\Big[1-e^{-r^2/r_0^2}\Big], \qquad u_y = -\alpha y + \frac{\Gamma\,x}{2\pi r^2}\Big[1-e^{-r^2/r_0^2}\Big]$$
+        </div>
+        <p class="formula-desc">Los parámetros de contracción radial ($\alpha$), circulación far-field ($\Gamma$) y radio del núcleo ($r_0$) se infieren durante la retropropagación en PyTorch.</p>
+      </div>
+
+      <div class="card clickable-card mt-4" onclick="openModal('assets/p3_burgers_fit.png', 'Ajuste Vórtice de Burgers PINN')">
+        <div class="card-header">
+          <span class="badge blue">Resultados PIV</span>
+          <h4>Pérdidas y Ajuste de Trayectoria Espiralada</h4>
+        </div>
+        <div class="img-wrapper" style="max-width: 800px; margin: 0 auto;">
+          <img src="assets/p3_burgers_fit.png" alt="Ajuste Burgers PINN" loading="lazy">
+          <div class="img-overlay"><span>🔍 Ampliar Imagen</span></div>
+        </div>
+        <p class="card-caption">Izquierda: convergencia de pérdidas. Derecha: trayectoria ajustada por la PINN capturando las espirales concéntricas frente a las mediciones experimentales.</p>
+      </div>
+    </main>
+
+    <!-- TAB 4: DOCUMENTACIÓN & CORRECCIONES -->
+    <main class="tab-content" id="doc">
+      <div class="section-header">
+        <h2>Reporte de Correcciones y Optimización de Memoria</h2>
+        <p>Detalle de las mejoras aplicadas al código Python y a la infraestructura de renderizado web.</p>
+      </div>
+
+      <div class="doc-grid">
+        <div class="doc-card">
+          <div class="doc-icon green">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <h4>1. Corrección de Cadenas de Escape en Comentarios</h4>
+          <p>Se convirtieron todas las cadenas multilínea y docstrings con expresiones en LaTeX a notación <strong>raw</strong> (<code>r"""..."""</code>). Esto corrigió fallos donde Python interpretaba:</p>
+          <ul>
+            <li><code>\beta</code> $\to$ caracter de retroceso (ASCII Backspace <code>\x08</code>).</li>
+            <li><code>\tau</code> y <code>\theta</code> $\to$ caracter Tabulación (<code>\t</code>).</li>
+            <li><code>\frac</code> $\to$ caracter Form Feed (<code>\x0c</code>).</li>
+            <li><code>\alpha</code> $\to$ caracter Campana (ASCII Bell <code>\x07</code>).</li>
+          </ul>
+        </div>
+
+        <div class="doc-card">
+          <div class="doc-icon blue">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          </div>
+          <h4>2. Reparación de Formato Markdown y Ortografía</h4>
+          <p>Se corrigieron artefactos de sustitución textual corruptos y errores dactilográficos:</p>
+          <ul>
+            <li><code>1/r*2*</code> $\to$ $1/r^2$</li>
+            <li><code>r*2*-->max(r*2,ϵ)</code> $\to$ $r^2 \to \max(r^2, \epsilon)$</li>
+            <li><code>ϵ = 10*−8*</code> $\to$ $\epsilon = 10^{-8}$</li>
+            <li>Corrección de acentuación: <i>ecuación, computacional, código, órdenes, precisión</i>.</li>
+            <li>Eliminación del bloque duplicado de conclusiones en el Problema 3.</li>
+          </ul>
+        </div>
+
+        <div class="doc-card">
+          <div class="doc-icon purple">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+          </div>
+          <h4>3. Optimización Radical de Memoria (RAM)</h4>
+          <p>Para solucionar el problema de congelamiento del navegador y consumo excesivo de memoria:</p>
+          <ul>
+            <li><strong>Matplotlib Backend Backend 'Agg'</strong>: Generación de gráficos sin levantar ventanas interactivas pesadas GUI.</li>
+            <li><strong>Liberación Explícita</strong>: Invocación de <code>plt.close(fig)</code> inmediatamente después de renderizar cada gráfico.</li>
+            <li><strong>Generación de Activos Livianos</strong>: Exportación a SVG/PNG optimizados y animaciones GIF comprimidas.</li>
+            <li><strong>Carga perezosa (Lazy Loading)</strong>: La interfaz web carga gráficos y animaciones solo cuando la pestaña correspondiente entra en pantalla.</li>
+          </ul>
+        </div>
+      </div>
+    </main>
+
+    <!-- Modal Image Viewer -->
+    <div id="image-modal" class="modal-overlay" onclick="closeModal()">
+      <div class="modal-content" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+        <img id="modal-img" src="" alt="Vista ampliada">
+        <div id="modal-caption" class="modal-caption"></div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>Trabajo Práctico de Mecánica de Fluidos & Integración Numérica con PINNs — Visualizador Web v1.0</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
