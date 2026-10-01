@@ -26,7 +26,7 @@ También puedes abrir el archivo `web/index.html` haciendo doble clic sobre él 
 
 ## 🎨 2. Funcionalidades de la Interfaz Web
 
-- **Pestañas de Navegación**: Cambia cómodamente entre los distintas secciones del trabajo práctico:
+- **Pestañas de Navegación**: Cambia cómodamente entre las distintas secciones del trabajo práctico:
   - **Problema 1: Flujos Adimensionales**:
     - *Inciso (i)*: Fuente + Corriente Creciente ($U(t')=t'$).
     - *Inciso (ii)*: Fuente + Torbellino Decayente ($\Gamma(t) = \Gamma_0 e^{-t/\tau}$).
@@ -42,7 +42,7 @@ También puedes abrir el archivo `web/index.html` haciendo doble clic sobre él 
   - **Correcciones & Documentación**:
     - Detalle de los errores corregidos en docstrings y optimización de memoria.
 - **Visor Modal en Alta Resolución**: Haz clic sobre cualquier gráfico para ampliarlo a pantalla completa.
-- **Formulas Matemáticas**: Renderizado automático en LaTeX con MathJax.
+- **Fórmulas Matemáticas**: Renderizado automático en LaTeX con MathJax.
 
 ---
 
@@ -72,7 +72,8 @@ tp gio/
 ├── G1_DaCruz_Jeifetz_Teira.ipynb # Notebook original de Jupyter / Colab
 ├── serve.py                    # Servidor web local liviano (Lanza la web)
 ├── export_assets.py            # Generador de gráficos PNG y GIFs animados
-├── README.md                   # Guía de uso del proyecto (este archivo)
+├── README.md                   # Guía de uso del proyecto
+├── COMO_USAR.md                # Guía de uso en español (este archivo)
 └── web/
     ├── index.html              # Estructura principal de la interfaz web
     ├── style.css               # Estilos modernos Dark Mode & Glassmorphism
