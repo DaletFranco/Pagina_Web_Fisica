@@ -81,10 +81,3 @@ tp gio/
     └── assets/                 # Gráficos PNG y animaciones GIF comprimidas
 ```
 
----
-
-## 🔧 5. Correcciones Aplicadas en el Código
-
-1. **Notación Raw en Docstrings (`r"""..."""`)**: Corregidas todas las cadenas con barras invertidas `\` para evitar que Python reemplace secuencias como `\beta`, `\tau`, `\theta`, `\frac`, `\alpha` por caracteres de escape corruptos.
-2. **Reparación de Markdown Corrupto**: Sustituidos artefactos como `1/r*2*` $\to$ `$1/r^2$` y `r*2*-->max(r*2,ϵ)` $\to$ `$r^2 \to \max(r^2, \epsilon)$`.
-3. **Control de Memoria RAM**: Eliminado el almacenamiento simultáneo de cientos de figuras en RAM invocando `plt.close(fig)` inmediatamente después de cada renderizado.
